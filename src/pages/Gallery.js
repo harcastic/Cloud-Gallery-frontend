@@ -88,7 +88,7 @@ export default function Gallery({ setPage }) {
               <div key={img._id} style={styles.imageCard} className="glass">
                 <img
                   src={img.url}
-                  alt=""
+                  alt={img.filename || "Gallery image"}
                   style={styles.image}
                   onClick={() => setSelectedImage(img.url)}
                 />
