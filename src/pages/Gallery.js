@@ -107,7 +107,7 @@ export default function Gallery({ setPage }) {
           style={styles.modal}
           onClick={() => setSelectedImage(null)}
         >
-          <img src={selectedImage} style={styles.fullImage} />
+          <img src={selectedImage} alt="Full screen image view" style={styles.fullImage} />
         </div>
       )}
     </div>
