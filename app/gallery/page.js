@@ -89,32 +89,73 @@ export default function Gallery() {
       <Navbar user={user} onLogout={handleLogout} />
       
       <div style={styles.container}>
-        {error && <div style={styles.error}>{error}</div>}
+        {error && (
+          <div style={styles.error}>
+            ⚠️ {error}
+          </div>
+        )}
 
         {/* Upload View */}
         {view === 'upload' && (
           <div style={styles.card} className="glass">
-            <h2>Upload Image</h2>
+            <h2 style={{
+              color: '#453724',
+              marginBottom: '1.5rem',
+              fontSize: '1.8rem',
+              background: 'linear-gradient(135deg, #c87620 0%, #93c193 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}>
+              📤 Upload Your Image
+            </h2>
             
             <form onSubmit={handleUpload}>
-              <input
-                type="file"
-                onChange={(e) => setFile(e.target.files?.[0])}
-                disabled={loading}
-                accept="image/*"
-              />
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{
+                  display: 'block',
+                  marginBottom: '0.75rem',
+                  color: '#453724',
+                  fontWeight: '600',
+                  fontSize: '1rem',
+                }}>
+                  📸 Choose Image
+                </label>
+                <input
+                  type="file"
+                  onChange={(e) => setFile(e.target.files?.[0])}
+                  disabled={loading}
+                  accept="image/*"
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '2px solid rgba(200, 118, 32, 0.3)',
+                    borderRadius: '8px',
+                    backgroundColor: 'white',
+                    color: '#453724',
+                    cursor: 'pointer',
+                    fontSize: '0.95rem',
+                  }}
+                />
+              </div>
               
               <div style={styles.buttonGroup}>
-                <button type="submit" disabled={loading}>
-                  {loading ? 'Uploading...' : 'Upload'}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  style={{...styles.uploadBtn, flex: 1}}
+                  className="button"
+                >
+                  {loading ? '⏳ Uploading...' : '✓ Upload'}
                 </button>
                 <button
                   type="button"
                   onClick={() => setView('gallery')}
                   disabled={loading}
-                  style={styles.cancelBtn}
+                  style={{...styles.cancelBtn, flex: 1}}
+                  className="button"
                 >
-                  Cancel
+                  ✕ Cancel
                 </button>
               </div>
             </form>
@@ -124,26 +165,54 @@ export default function Gallery() {
         {/* Gallery View */}
         {view === 'gallery' && (
           <>
-            <button
-              onClick={() => setView('upload')}
-              style={styles.uploadBtn}
-              disabled={loading}
-            >
-              + Upload Image
-            </button>
+            <div style={{ marginBottom: '2rem' }}>
+              <button
+                onClick={() => setView('upload')}
+                style={styles.uploadBtn}
+                disabled={loading}
+                className="button"
+              >
+                📤 Upload Image
+              </button>
+            </div>
 
             {images.length === 0 ? (
               <div style={styles.emptyState}>
-                <p>No images yet. Start by uploading one!</p>
+                <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📸</div>
+                <div style={{ fontSize: '1.3rem', fontWeight: '600', marginBottom: '0.5rem', color: '#453724' }}>
+                  Your gallery is empty
+                </div>
+                <div style={{ fontSize: '0.95rem', color: '#6b5d47' }}>
+                  Start by uploading your first image to build your collection
+                </div>
               </div>
             ) : (
               <div style={styles.grid}>
                 {images.map((img) => (
-                  <div key={img._id} style={styles.imageCard} className="glass">
+                  <div
+                    key={img._id}
+                    style={{
+                      ...styles.imageCard,
+                      background: 'linear-gradient(135deg, rgba(147, 193, 147, 0.1) 0%, rgba(200, 118, 32, 0.1) 100%)',
+                      border: '1px solid rgba(200, 118, 32, 0.2)',
+                    }}
+                    className="glass"
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-8px)';
+                      e.currentTarget.style.boxShadow = '0 12px 24px rgba(200, 118, 32, 0.2)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
                     <img
                       src={img.url}
                       alt={img.filename || 'Gallery image'}
-                      style={styles.image}
+                      style={{
+                        ...styles.image,
+                        borderRadius: '12px 12px 0 0',
+                      }}
                       onClick={() => setSelectedImage(img.url)}
                     />
                     <div style={styles.cardFooter}>
@@ -151,8 +220,9 @@ export default function Gallery() {
                         onClick={() => handleDelete(img._id)}
                         disabled={loading}
                         style={styles.deleteBtn}
+                        className="button"
                       >
-                        Delete
+                        🗑️ Delete
                       </button>
                     </div>
                   </div>
@@ -172,6 +242,7 @@ export default function Gallery() {
               src={selectedImage}
               alt="Full screen image view"
               style={styles.fullImage}
+              onClick={(e) => e.stopPropagation()}
             />
           </div>
         )}
@@ -182,61 +253,72 @@ export default function Gallery() {
 
 const styles = {
   container: {
-    maxWidth: '1200px',
+    maxWidth: '1400px',
     margin: '0 auto',
     padding: '2rem',
+    minHeight: 'calc(100vh - 80px)',
   },
   card: {
-    padding: '2rem',
+    padding: '2.5rem',
     marginBottom: '2rem',
-    maxWidth: '500px',
+    maxWidth: '600px',
   },
   error: {
-    color: '#d32f2f',
+    background: 'rgba(217, 119, 96, 0.15)',
+    border: '1px solid rgba(217, 119, 96, 0.3)',
+    color: '#a85f1a',
     padding: '1rem',
-    marginBottom: '1rem',
-    backgroundColor: 'rgba(211, 47, 47, 0.1)',
-    borderRadius: '5px',
+    marginBottom: '1.5rem',
+    borderRadius: '8px',
     textAlign: 'center',
+    fontSize: '0.95rem',
   },
   uploadBtn: {
     marginBottom: '2rem',
     padding: '12px 24px',
-    fontSize: '1rem',
-    fontWeight: 'bold',
+    fontSize: '1.1rem',
+    fontWeight: '600',
+    background: 'linear-gradient(135deg, #c87620 0%, #d98930 100%)',
   },
   buttonGroup: {
     display: 'flex',
     gap: '1rem',
-    marginTop: '1rem',
+    marginTop: '1.5rem',
   },
   cancelBtn: {
-    background: '#999',
+    background: 'linear-gradient(135deg, #999 0%, #777 100%)',
+    flex: 1,
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-    gap: '1rem',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+    gap: '1.5rem',
+    marginTop: '1rem',
   },
   imageCard: {
     overflow: 'hidden',
-    borderRadius: '10px',
+    borderRadius: '12px',
     cursor: 'pointer',
-    transition: 'transform 0.3s',
+    transition: 'all 0.3s ease',
+    display: 'flex',
+    flexDirection: 'column',
   },
   image: {
     width: '100%',
-    height: '200px',
+    height: '240px',
     objectFit: 'cover',
     cursor: 'pointer',
+    transition: 'transform 0.3s ease',
   },
   cardFooter: {
-    padding: '0.5rem',
+    padding: '1rem',
+    background: 'rgba(238, 233, 221, 0.9)',
   },
   deleteBtn: {
     width: '100%',
-    background: '#d32f2f',
-    padding: '8px',
+    background: 'linear-gradient(135deg, #d97760 0%, #c87620 100%)',
+    padding: '6px 12px',
+    fontSize: '0.85rem',
   },
   modal: {
     position: 'fixed',
@@ -244,22 +326,24 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    backgroundColor: 'rgba(69, 55, 36, 0.95)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1000,
     cursor: 'pointer',
+    backdropFilter: 'blur(10px)',
   },
   fullImage: {
     maxWidth: '90vw',
     maxHeight: '90vh',
     objectFit: 'contain',
+    animation: 'fadeIn 0.3s ease',
   },
   emptyState: {
     textAlign: 'center',
-    padding: '3rem',
-    color: 'white',
+    padding: '4rem 2rem',
+    color: '#6b5d47',
     fontSize: '1.1rem',
   },
 };
