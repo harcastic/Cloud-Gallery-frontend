@@ -1,22 +1,13 @@
-# Cloud Gallery Frontend
+# Cloud Gallery Frontend - Next.js Edition
 
-A React-based frontend for the Cloud Image Gallery application. This provides:
+A modern Next.js-based frontend for the Cloud Image Gallery application. This provides:
 - User authentication UI (register, login)
 - Image gallery display
 - Image upload functionality
 - User profile display
+- Server-side rendering and optimization
 
-## 🚀 Deployment
-
-This frontend is deployed on **Vercel** as an independent service.
-
-### Environment Variables (Required)
-
-```env
-REACT_APP_API_URL=https://your-render-backend-url.render.com/api
-```
-
-**Note**: This must be set in Vercel's Environment Variables dashboard (not in a committed .env file).
+## 🚀 Quick Start
 
 ### Local Development
 
@@ -25,85 +16,117 @@ REACT_APP_API_URL=https://your-render-backend-url.render.com/api
 npm install
 
 # Start development server
-npm start
+npm run dev
 
 # Application runs on http://localhost:3000
 ```
 
-For local development, create a `.env.local` file:
+### Environment Setup
+
+Create `.env.local` for local development:
 ```env
-REACT_APP_API_URL=http://localhost:5000/api
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ```
 
 ### Deployment on Vercel
 
-1. Push this repository to GitHub
-2. Go to [vercel.com](https://vercel.com)
-3. Import this GitHub repository
-4. Vercel auto-detects it as a React app
-5. In Project Settings → Environment Variables, add:
-   - `REACT_APP_API_URL=<your-render-backend-url>/api`
-6. Deploy
+1. Push to GitHub
+2. Import project on Vercel
+3. Set environment variable: `NEXT_PUBLIC_API_URL=<your-backend-url>`
+4. Deploy!
 
-### Project Structure
+## 📁 Project Structure
 
 ```
-frontend/
-├── public/
-│   ├── index.html
-│   └── manifest.json
-├── src/
-│   ├── api.js              # API request helper
-│   ├── App.js              # Main app component
-│   ├── App.css             # App styles
-│   ├── index.js            # React entry point
-│   ├── components/
-│   │   └── Navbar.js       # Navigation component
-│   └── pages/
-│       ├── Login.js        # Login page
-│       ├── Register.js     # Registration page
-│       └── Gallery.js      # Gallery page
-├── package.json            # Dependencies
-└── vercel.json            # Vercel configuration
+app/
+├── login/                 # Login page
+├── register/              # Registration page
+├── gallery/               # Main gallery page
+├── components/Navbar.js   # Navigation
+└── layout.js             # Root layout
+
+lib/
+└── api.js                # API client
+
+Configuration
+├── package.json          # Dependencies (Next.js)
+├── next.config.js        # Next.js config
+├── jsconfig.json         # Path aliases  
+└── vercel.json          # Vercel config
 ```
 
-### Available Scripts
+## ✨ Features
+
+✅ **User Authentication** - Register, login, logout with JWT
+✅ **Image Management** - Upload, view, delete images
+✅ **User Profile** - Display user information
+✅ **Responsive Design** - Works on desktop and mobile
+✅ **Cloud Storage** - Images stored in Azure Blob Storage
+✅ **Fast Performance** - Next.js SSR and optimization
+✅ **Modern Stack** - React 18, Next.js 14, Axios
+
+## 🔧 Available Scripts
 
 ```bash
-# Start development server
-npm start
-
-# Build for production
-npm run build
-
-# Run tests
-npm test
-
-# Eject from Create React App (⚠️ irreversible)
-npm run eject
+npm run dev       # Start development server
+npm run build     # Build for production
+npm start         # Start production server
+npm run lint      # Run ESLint
 ```
 
-### Important Notes
+## 📊 Tech Stack
 
-- ** This is an independent service** - no dependencies on the backend folder
-- `REACT_APP_*` prefix is required for environment variables to be accessible in the browser
-- The `.env.local` file is only for local development - never commit it
-- Never hardcode the backend URL in code - always use environment variables
-- Vercel automatically handles SPA routing (rewrites to index.html)
+- **Next.js 14** - React framework with SSR
+- **React 18** - UI components
+- **Axios** - HTTP requests
+- **CSS** - Inline styles with glass-morphism design
 
-### Features
+## 🌐 Deployment
 
-✅ User registration and login
-✅ JWT token-based authentication
-✅ Image gallery display
-✅ Image upload to cloud storage
-✅ Image deletion
-✅ User profile display
-✅ Responsive design
+**Platform:** Vercel  
+**Build Command:** `npm run build`  
+**Output Directory:** `.next`  
+**Environment Variable:** `NEXT_PUBLIC_API_URL`
+
+### For Vercel Dashboard
+
+1. Go to Settings → Environment Variables
+2. Add: `NEXT_PUBLIC_API_URL=https://your-backend.render.com/api`
+3. Redeploy
+
+## 📝 Important Notes
+
+- This is a **completely independent** Next.js application
+- Backend URL must be set in Vercel environment variables
+- `.env.local` is for local development only (ignored by git)
+- Never commit `.env` files with secrets
+
+## 📚 Additional Documentation
+
+- [README_NEXTJS.md](README_NEXTJS.md) - Detailed Next.js documentation
+- [INDEPENDENCE_CHECKLIST_NEXTJS.md](INDEPENDENCE_CHECKLIST_NEXTJS.md) - Independence verification
+- [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md) - Detailed deployment guide
+
+## 🤝 API Endpoints
+
+The frontend connects to these backend endpoints:
+
+**Auth:**
+- `POST /auth/register` - Register new user
+- `POST /auth/login` - Login user
+- `GET /auth/profile` - Get user profile
+
+**Images:**
+- `GET /images` - List all images
+- `POST /images` - Upload image
+- `DELETE /images/:id` - Delete image
 
 ---
 
-See [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md) for detailed Vercel deployment instructions.
+**Deployed on:** [Vercel](https://vercel.com)  
+**Backend:** [Render](https://render.com)  
+**Database:** MongoDB Atlas  
+**Storage:** Azure Blob Storage
 
 ### Analyzing the Bundle Size
 
