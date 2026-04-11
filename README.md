@@ -1,53 +1,109 @@
-# Getting Started with Create React App
+# Cloud Gallery Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based frontend for the Cloud Image Gallery application. This provides:
+- User authentication UI (register, login)
+- Image gallery display
+- Image upload functionality
+- User profile display
 
-## Available Scripts
+## 🚀 Deployment
 
-In the project directory, you can run:
+This frontend is deployed on **Vercel** as an independent service.
 
-### `npm start`
+### Environment Variables (Required)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```env
+REACT_APP_API_URL=https://your-render-backend-url.render.com/api
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Note**: This must be set in Vercel's Environment Variables dashboard (not in a committed .env file).
 
-### `npm test`
+### Local Development
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+# Install dependencies
+npm install
 
-### `npm run build`
+# Start development server
+npm start
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Application runs on http://localhost:3000
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+For local development, create a `.env.local` file:
+```env
+REACT_APP_API_URL=http://localhost:5000/api
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Deployment on Vercel
 
-### `npm run eject`
+1. Push this repository to GitHub
+2. Go to [vercel.com](https://vercel.com)
+3. Import this GitHub repository
+4. Vercel auto-detects it as a React app
+5. In Project Settings → Environment Variables, add:
+   - `REACT_APP_API_URL=<your-render-backend-url>/api`
+6. Deploy
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Project Structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+frontend/
+├── public/
+│   ├── index.html
+│   └── manifest.json
+├── src/
+│   ├── api.js              # API request helper
+│   ├── App.js              # Main app component
+│   ├── App.css             # App styles
+│   ├── index.js            # React entry point
+│   ├── components/
+│   │   └── Navbar.js       # Navigation component
+│   └── pages/
+│       ├── Login.js        # Login page
+│       ├── Register.js     # Registration page
+│       └── Gallery.js      # Gallery page
+├── package.json            # Dependencies
+└── vercel.json            # Vercel configuration
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Available Scripts
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+# Start development server
+npm start
 
-## Learn More
+# Build for production
+npm run build
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Run tests
+npm test
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Eject from Create React App (⚠️ irreversible)
+npm run eject
+```
 
-### Code Splitting
+### Important Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- ** This is an independent service** - no dependencies on the backend folder
+- `REACT_APP_*` prefix is required for environment variables to be accessible in the browser
+- The `.env.local` file is only for local development - never commit it
+- Never hardcode the backend URL in code - always use environment variables
+- Vercel automatically handles SPA routing (rewrites to index.html)
+
+### Features
+
+✅ User registration and login
+✅ JWT token-based authentication
+✅ Image gallery display
+✅ Image upload to cloud storage
+✅ Image deletion
+✅ User profile display
+✅ Responsive design
+
+---
+
+See [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md) for detailed Vercel deployment instructions.
 
 ### Analyzing the Bundle Size
 
