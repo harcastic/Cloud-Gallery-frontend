@@ -14,6 +14,7 @@ export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [filter, setFilter] = useState('all');
 
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
@@ -48,6 +49,11 @@ export default function Gallery() {
     try {
       if (!file) {
         throw new Error('Please select a file');
+      }
+
+      // Check file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
+        throw new Error('File size exceeds 5MB limit');
       }
 
       const formData = new FormData();
@@ -124,7 +130,7 @@ export default function Gallery() {
                   type="file"
                   onChange={(e) => setFile(e.target.files?.[0])}
                   disabled={loading}
-                  accept="image/*"
+                  accept="image/*,video/*"
                   style={{
                     display: 'block',
                     width: '100%',
@@ -137,6 +143,9 @@ export default function Gallery() {
                     fontSize: '0.95rem',
                   }}
                 />
+                <div style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: '#6b5d47' }}>
+                  Maximum file size: 5MB
+                </div>
               </div>
               
               <div style={styles.buttonGroup}>
@@ -172,9 +181,44 @@ export default function Gallery() {
                 disabled={loading}
                 className="button"
               >
-                📤 Upload Image
+                📤 Upload Image/Video
               </button>
             </div>
+
+            {images.length > 0 && (
+              <div style={{ marginBottom: '2rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => setFilter('all')}
+                  style={{
+                    ...styles.filterBtn,
+                    ...(filter === 'all' ? styles.filterBtnActive : {}),
+                  }}
+                  className="button"
+                >
+                  📁 All
+                </button>
+                <button
+                  onClick={() => setFilter('image')}
+                  style={{
+                    ...styles.filterBtn,
+                    ...(filter === 'image' ? styles.filterBtnActive : {}),
+                  }}
+                  className="button"
+                >
+                  🖼️ Images
+                </button>
+                <button
+                  onClick={() => setFilter('video')}
+                  style={{
+                    ...styles.filterBtn,
+                    ...(filter === 'video' ? styles.filterBtnActive : {}),
+                  }}
+                  className="button"
+                >
+                  🎬 Videos
+                </button>
+              </div>
+            )}
 
             {images.length === 0 ? (
               <div style={styles.emptyState}>
@@ -188,7 +232,9 @@ export default function Gallery() {
               </div>
             ) : (
               <div style={styles.grid}>
-                {images.map((img) => (
+                {images
+                  .filter((img) => filter === 'all' || img.fileType === filter)
+                  .map((img) => (
                   <div
                     key={img._id}
                     style={{
@@ -206,15 +252,26 @@ export default function Gallery() {
                       e.currentTarget.style.boxShadow = 'none';
                     }}
                   >
-                    <img
-                      src={img.url}
-                      alt={img.filename || 'Gallery image'}
-                      style={{
-                        ...styles.image,
-                        borderRadius: '12px 12px 0 0',
-                      }}
-                      onClick={() => setSelectedImage(img.url)}
-                    />
+                    {img.fileType === 'video' ? (
+                      <video
+                        src={img.url}
+                        style={{
+                          ...styles.image,
+                          borderRadius: '12px 12px 0 0',
+                        }}
+                        controls
+                      />
+                    ) : (
+                      <img
+                        src={img.url}
+                        alt={img.filename || 'Gallery image'}
+                        style={{
+                          ...styles.image,
+                          borderRadius: '12px 12px 0 0',
+                        }}
+                        onClick={() => setSelectedImage(img.url)}
+                      />
+                    )}
                     <div style={styles.cardFooter}>
                       <button
                         onClick={() => handleDelete(img._id)}
@@ -319,6 +376,23 @@ const styles = {
     background: 'linear-gradient(135deg, #d97760 0%, #c87620 100%)',
     padding: '6px 12px',
     fontSize: '0.85rem',
+  },
+  filterBtn: {
+    padding: '8px 16px',
+    fontSize: '0.95rem',
+    fontWeight: '600',
+    background: 'linear-gradient(135deg, rgba(200, 118, 32, 0.2) 0%, rgba(147, 193, 147, 0.2) 100%)',
+    color: '#453724',
+    border: '2px solid rgba(200, 118, 32, 0.3)',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+  filterBtnActive: {
+    background: 'linear-gradient(135deg, #c87620 0%, #93c193 100%)',
+    color: 'white',
+    border: '2px solid rgba(200, 118, 32, 0.8)',
+    boxShadow: '0 4px 12px rgba(200, 118, 32, 0.2)',
   },
   modal: {
     position: 'fixed',
