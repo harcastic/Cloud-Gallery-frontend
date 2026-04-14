@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import { request } from '@/lib/api';
+import styles from './gallery.module.css';
 
 export default function Gallery() {
   const router = useRouter();
@@ -86,65 +87,37 @@ export default function Gallery() {
 
   return (
     <div>
-      <Navbar user={user} onLogout={handleLogout} />
+      <Navbar user={user} onLogout={handleLogout} isAuthenticated={true} />
       
-      <div style={styles.container}>
+      <div className={styles.container}>
         {error && (
-          <div style={styles.error}>
+          <div className={styles.error}>
             ⚠️ {error}
           </div>
         )}
 
         {/* Upload View */}
         {view === 'upload' && (
-          <div style={styles.card} className="glass">
-            <h2 style={{
-              color: '#453724',
-              marginBottom: '1.5rem',
-              fontSize: '1.8rem',
-              background: 'linear-gradient(135deg, #c87620 0%, #93c193 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}>
-              📤 Upload Your Image
-            </h2>
+          <div className={styles.card}>
+            <h2 className={styles.cardTitle}>📤 Upload Your Image</h2>
             
             <form onSubmit={handleUpload}>
-              <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{
-                  display: 'block',
-                  marginBottom: '0.75rem',
-                  color: '#453724',
-                  fontWeight: '600',
-                  fontSize: '1rem',
-                }}>
-                  📸 Choose Image
-                </label>
+              <div className={styles.formGroup}>
+                <label className={styles.label}>📸 Choose Image</label>
                 <input
                   type="file"
                   onChange={(e) => setFile(e.target.files?.[0])}
                   disabled={loading}
                   accept="image/*"
-                  style={{
-                    display: 'block',
-                    width: '100%',
-                    padding: '0.75rem',
-                    border: '2px solid rgba(200, 118, 32, 0.3)',
-                    borderRadius: '8px',
-                    backgroundColor: 'white',
-                    color: '#453724',
-                    cursor: 'pointer',
-                    fontSize: '0.95rem',
-                  }}
+                  className={styles.fileInput}
                 />
               </div>
               
-              <div style={styles.buttonGroup}>
+              <div className={styles.buttonGroup}>
                 <button
                   type="submit"
                   disabled={loading}
-                  style={{...styles.uploadBtn, flex: 1}}
-                  className="button"
+                  className={styles.uploadBtn}
                 >
                   {loading ? '⏳ Uploading...' : '✓ Upload'}
                 </button>
@@ -152,8 +125,7 @@ export default function Gallery() {
                   type="button"
                   onClick={() => setView('gallery')}
                   disabled={loading}
-                  style={{...styles.cancelBtn, flex: 1}}
-                  className="button"
+                  className={styles.cancelBtn}
                 >
                   ✕ Cancel
                 </button>
@@ -165,62 +137,51 @@ export default function Gallery() {
         {/* Gallery View */}
         {view === 'gallery' && (
           <>
-            <div style={{ marginBottom: '2rem' }}>
+            <div className={styles.uploadSection}>
               <button
                 onClick={() => setView('upload')}
-                style={styles.uploadBtn}
+                className={styles.uploadTriggerBtn}
                 disabled={loading}
-                className="button"
               >
                 📤 Upload Image
               </button>
             </div>
 
             {images.length === 0 ? (
-              <div style={styles.emptyState}>
-                <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📸</div>
-                <div style={{ fontSize: '1.3rem', fontWeight: '600', marginBottom: '0.5rem', color: '#453724' }}>
-                  Your gallery is empty
-                </div>
-                <div style={{ fontSize: '0.95rem', color: '#6b5d47' }}>
+              <div className={styles.emptyState}>
+                <span className={styles.emptyStateIcon}>📸</span>
+                <div className={styles.emptyStateTitle}>Your gallery is empty</div>
+                <div className={styles.emptyStateDesc}>
                   Start by uploading your first image to build your collection
                 </div>
+                <button
+                  onClick={() => setView('upload')}
+                  className={styles.emptyStateBtn}
+                  disabled={loading}
+                >
+                  🚀 Upload Your First Image
+                </button>
               </div>
             ) : (
-              <div style={styles.grid}>
+              <div className={styles.grid}>
                 {images.map((img) => (
                   <div
                     key={img._id}
-                    style={{
-                      ...styles.imageCard,
-                      background: 'linear-gradient(135deg, rgba(147, 193, 147, 0.1) 0%, rgba(200, 118, 32, 0.1) 100%)',
-                      border: '1px solid rgba(200, 118, 32, 0.2)',
-                    }}
-                    className="glass"
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-8px)';
-                      e.currentTarget.style.boxShadow = '0 12px 24px rgba(200, 118, 32, 0.2)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = 'none';
-                    }}
+                    className={styles.imageCard}
                   >
-                    <img
-                      src={img.url}
-                      alt={img.filename || 'Gallery image'}
-                      style={{
-                        ...styles.image,
-                        borderRadius: '12px 12px 0 0',
-                      }}
-                      onClick={() => setSelectedImage(img.url)}
-                    />
-                    <div style={styles.cardFooter}>
+                    <div className={styles.imageWrapper}>
+                      <img
+                        src={img.url}
+                        alt={img.filename || 'Gallery image'}
+                        className={styles.image}
+                        onClick={() => setSelectedImage(img.url)}
+                      />
+                    </div>
+                    <div className={styles.cardFooter}>
                       <button
                         onClick={() => handleDelete(img._id)}
                         disabled={loading}
-                        style={styles.deleteBtn}
-                        className="button"
+                        className={styles.deleteBtn}
                       >
                         🗑️ Delete
                       </button>
@@ -235,13 +196,13 @@ export default function Gallery() {
         {/* Full Screen View */}
         {selectedImage && (
           <div
-            style={styles.modal}
+            className={styles.modal}
             onClick={() => setSelectedImage(null)}
           >
             <img
               src={selectedImage}
               alt="Full screen image view"
-              style={styles.fullImage}
+              className={styles.fullImage}
               onClick={(e) => e.stopPropagation()}
             />
           </div>
@@ -250,100 +211,3 @@ export default function Gallery() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: '1400px',
-    margin: '0 auto',
-    padding: '2rem',
-    minHeight: 'calc(100vh - 80px)',
-  },
-  card: {
-    padding: '2.5rem',
-    marginBottom: '2rem',
-    maxWidth: '600px',
-  },
-  error: {
-    background: 'rgba(217, 119, 96, 0.15)',
-    border: '1px solid rgba(217, 119, 96, 0.3)',
-    color: '#a85f1a',
-    padding: '1rem',
-    marginBottom: '1.5rem',
-    borderRadius: '8px',
-    textAlign: 'center',
-    fontSize: '0.95rem',
-  },
-  uploadBtn: {
-    marginBottom: '2rem',
-    padding: '12px 24px',
-    fontSize: '1.1rem',
-    fontWeight: '600',
-    background: 'linear-gradient(135deg, #c87620 0%, #d98930 100%)',
-  },
-  buttonGroup: {
-    display: 'flex',
-    gap: '1rem',
-    marginTop: '1.5rem',
-  },
-  cancelBtn: {
-    background: 'linear-gradient(135deg, #999 0%, #777 100%)',
-    flex: 1,
-  },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-    gap: '1.5rem',
-    marginTop: '1rem',
-  },
-  imageCard: {
-    overflow: 'hidden',
-    borderRadius: '12px',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  image: {
-    width: '100%',
-    height: '240px',
-    objectFit: 'cover',
-    cursor: 'pointer',
-    transition: 'transform 0.3s ease',
-  },
-  cardFooter: {
-    padding: '1rem',
-    background: 'rgba(238, 233, 221, 0.9)',
-  },
-  deleteBtn: {
-    width: '100%',
-    background: 'linear-gradient(135deg, #d97760 0%, #c87620 100%)',
-    padding: '6px 12px',
-    fontSize: '0.85rem',
-  },
-  modal: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(69, 55, 36, 0.95)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1000,
-    cursor: 'pointer',
-    backdropFilter: 'blur(10px)',
-  },
-  fullImage: {
-    maxWidth: '90vw',
-    maxHeight: '90vh',
-    objectFit: 'contain',
-    animation: 'fadeIn 0.3s ease',
-  },
-  emptyState: {
-    textAlign: 'center',
-    padding: '4rem 2rem',
-    color: '#6b5d47',
-    fontSize: '1.1rem',
-  },
-};

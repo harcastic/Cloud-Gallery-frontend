@@ -1,0 +1,519 @@
+/* Gallery Page Styles */
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #f6f5f0 0%, #faf9f6 50%, #f0ebe2 100%);
+}
+
+/* Error Alert */
+.error {
+  background: linear-gradient(135deg, rgba(217, 119, 96, 0.15) 0%, rgba(217, 119, 96, 0.08) 100%);
+  border: 2px solid rgba(217, 119, 96, 0.3);
+  color: #a85f1a;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  font-weight: 500;
+  text-align: center;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 16px rgba(217, 119, 96, 0.1);
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Upload Button Above Gallery */
+.uploadSection {
+  margin-bottom: 3rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.uploadTriggerBtn {
+  background: linear-gradient(135deg, #c87620 0%, #a85f1a 100%);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(200, 118, 32, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  letter-spacing: 0.3px;
+}
+
+.uploadTriggerBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(200, 118, 32, 0.4);
+}
+
+.uploadTriggerBtn:active {
+  transform: translateY(-1px);
+}
+
+/* Upload Card */
+.card {
+  background: white;
+  padding: 3rem;
+  margin-bottom: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(69, 55, 36, 0.1);
+  border: 1px solid rgba(200, 118, 32, 0.1);
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cardTitle {
+  color: #453724;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #c87620 0%, #a85f1a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+/* Form Styles */
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: #453724;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fileInput {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  border: 2.5px dashed #c87620;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(200, 118, 32, 0.03) 0%, rgba(147, 193, 147, 0.03) 100%);
+  color: #453724;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.fileInput:hover {
+  border-color: #a85f1a;
+  background: linear-gradient(135deg, rgba(200, 118, 32, 0.08) 0%, rgba(147, 193, 147, 0.08) 100%);
+}
+
+.fileInput:focus {
+  outline: none;
+  border-color: #a85f1a;
+  box-shadow: 0 0 0 3px rgba(200, 118, 32, 0.1);
+}
+
+/* Button Group */
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.uploadBtn {
+  flex: 1;
+  background: linear-gradient(135deg, #c87620 0%, #a85f1a 100%);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(200, 118, 32, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.uploadBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(200, 118, 32, 0.4);
+}
+
+.uploadBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.cancelBtn {
+  flex: 1;
+  background: linear-gradient(135deg, #d4ccc0 0%, #c0b8ac 100%);
+  color: #453724;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(69, 55, 36, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.cancelBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(69, 55, 36, 0.15);
+  background: linear-gradient(135deg, #c0b8ac 0%, #a89d91 100%);
+}
+
+/* Gallery Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Image Card */
+.imageCard {
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+  border: 1px solid rgba(200, 118, 32, 0.1);
+  position: relative;
+  box-shadow: 0 4px 15px rgba(69, 55, 36, 0.08);
+}
+
+.imageCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #c87620 0%, #93c193 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  z-index: 10;
+}
+
+.imageCard:hover::before {
+  transform: scaleX(1);
+}
+
+.imageCard:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(200, 118, 32, 0.2);
+  border-color: #c87620;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f0ebe2 0%, #eee9dd 100%);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.imageCard:hover .image {
+  transform: scale(1.1);
+}
+
+/* Card Footer */
+.cardFooter {
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(255, 250, 246, 0.8) 0%, rgba(238, 233, 221, 0.8) 100%);
+  border-top: 1px solid rgba(200, 118, 32, 0.1);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.deleteBtn {
+  width: 100%;
+  background: linear-gradient(135deg, #d97760 0%, #c87620 100%);
+  color: white;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(217, 119, 96, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.deleteBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(217, 119, 96, 0.3);
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 6rem 2rem;
+  color: #6b5d47;
+  font-size: 1.1rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.emptyStateIcon {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  display: block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.emptyStateTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  color: #453724;
+}
+
+.emptyStateDesc {
+  font-size: 1rem;
+  color: #6b5d47;
+  margin-bottom: 2rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.emptyStateBtn {
+  background: linear-gradient(135deg, #c87620 0%, #a85f1a 100%);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(200, 118, 32, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.emptyStateBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(200, 118, 32, 0.4);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(69, 55, 36, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.3s ease;
+  padding: 1rem;
+}
+
+.fullImage {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: zoomIn 0.4s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
+  .card {
+    padding: 2rem;
+  }
+
+  .cardTitle {
+    font-size: 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .imageWrapper {
+    height: 240px;
+  }
+
+  .uploadSection {
+    flex-direction: column;
+  }
+
+  .uploadTriggerBtn {
+    width: 100%;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .uploadBtn,
+  .cancelBtn {
+    width: 100%;
+  }
+
+  .emptyState {
+    padding: 4rem 1rem;
+  }
+
+  .emptyStateIcon {
+    font-size: 3rem;
+  }
+
+  .emptyStateTitle {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  .cardTitle {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .imageWrapper {
+    height: 200px;
+  }
+
+  .uploadTriggerBtn {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .emptyStateIcon {
+    font-size: 2.5rem;
+  }
+
+  .emptyStateTitle {
+    font-size: 1.1rem;
+  }
+
+  .emptyStateDesc {
+    font-size: 0.9rem;
+  }
+
+  .label {
+    font-size: 0.9rem;
+  }
+
+  .fileInput {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+}
