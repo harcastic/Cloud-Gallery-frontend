@@ -35,9 +35,15 @@ pipeline{
 
         stage('deploy'){
             steps{
-                sh 'docker stop cgfrontend || true'
-                sh 'docker rm cgfrontend || true'
-                sh 'docker run -d -p 3000:3000 --env-file /home/azureuser/.env --name cgfrontend harcastic/cgfrontend:latest'
+                    sh '''
+                        if [ "$(docker ps -aq -f name=cgfrontend)" ]; then
+                            echo "Container exists. Removing..."
+                            docker rm -f cgfrontend
+                        else
+                            echo "No existing container."
+                        fi
+                    '''
+                    sh 'docker run -d -p 3000:3000 --env-file /opt/app/.env --name cgfrontend harcastic/cgfrontend:latest'
             }
         }
     }
