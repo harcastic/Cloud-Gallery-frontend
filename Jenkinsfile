@@ -43,7 +43,7 @@ pipeline{
                             echo "No existing container."
                         fi
                     '''
-                    sh 'docker run -d -p 3000:5000 --env-file /opt/app/.env --name cgfrontend harcastic/cgfrontend:latest'
+                    sh 'docker run -d -p 3000:3000 --env-file /opt/app/.env --name cgfrontend harcastic/cgfrontend:latest'
             }
         }
     }
